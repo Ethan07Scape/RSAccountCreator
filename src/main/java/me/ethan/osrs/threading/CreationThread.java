@@ -4,6 +4,7 @@ import me.ethan.osrs.api.proxy.Proxy;
 import me.ethan.osrs.api.proxy.ProxyHandler;
 import me.ethan.osrs.data.Constants;
 import me.ethan.osrs.handlers.AccountCreation;
+import me.ethan.osrs.utils.Condition;
 import me.ethan.osrs.utils.Utils;
 
 public class CreationThread extends Thread {
@@ -14,17 +15,22 @@ public class CreationThread extends Thread {
     public void run() {
         running = true;
         while (running) {
-            final Proxy proxy = grabProxy();
-            accountCreation = new AccountCreation(proxy);
-            final String response = accountCreation.getResponse();
-            System.err.println("ACCOUNT RESPONSE: " + response);
-            switch (response) {
-                case "SUCCESS":
-                    handleCreatedAccount();
-                    break;
-                case "ERROR":
-                    handleError();
-                    break;
+            try {
+                final Proxy proxy = grabProxy();
+                accountCreation = new AccountCreation(proxy);
+                final String response = accountCreation.getResponse();
+                System.err.println("ACCOUNT RESPONSE: " + response);
+                switch (response) {
+                    case "SUCCESS":
+                        handleCreatedAccount();
+                        break;
+                    case "ERROR":
+                        handleError();
+                        break;
+                }
+                Condition.sleep(200);
+            } catch (Exception e) {
+
             }
         }
     }
