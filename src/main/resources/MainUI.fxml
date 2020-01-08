@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="225.0" prefWidth="288.0" xmlns="http://javafx.com/javafx/11.0.1"
+            fx:controller="me.ethan.osrs.ui.UIController">
+   <children>
+      <TextField fx:id="threadCount" alignment="CENTER" layoutX="115.0" layoutY="134.0" prefHeight="25.0"
+                 prefWidth="59.0" text="5"/>
+      <Label layoutX="121.0" layoutY="108.0" text="Threads:">
+         <font>
+            <Font name="System Bold" size="12.0"/>
+         </font>
+      </Label>
+      <Button alignment="CENTER" layoutX="14.0" layoutY="193.0" mnemonicParsing="false" onAction="#loadProxies"
+              text="Load Proxies"/>
+      <Button fx:id="startButton" alignment="CENTER" layoutX="191.0" layoutY="193.0" mnemonicParsing="false"
+              onAction="#start" prefHeight="25.0" prefWidth="83.0" text="Start"/>
+      <Label layoutX="17.0" layoutY="174.0" text="Loaded:"/>
+      <Label fx:id="proxiesLoaded" layoutX="63.0" layoutY="174.0" text="0"/>
+      <Label layoutX="89.0" layoutY="35.0" text="2Captcha API Key:">
+         <font>
+            <Font name="System Bold" size="13.0"/>
+         </font>
+      </Label>
+      <TextField fx:id="apiKey" alignment="CENTER" layoutX="70.0" layoutY="61.0" promptText="Please enter API key..."/>
+      <Label layoutX="195.0" layoutY="174.0" text="Created: "/>
+      <Label fx:id="accountsMade" layoutX="243.0" layoutY="174.0" text="0"/>
+   </children>
+</AnchorPane>
