@@ -32,7 +32,7 @@ public class ReCaptchaV2 {
                     + "&pageurl=" + url
                     + proxy;
             final HttpAPI httpAPI = new HttpAPI();
-            return httpAPI.get("https://2captcha.com/in.php?" + parameters).replaceAll("OK\\|", "");
+            return httpAPI.get("https://2captcha.com/in.php?" + parameters, null).replaceAll("OK\\|", "");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,10 +50,10 @@ public class ReCaptchaV2 {
             final HttpAPI httpAPI = new HttpAPI();
             String response;
             do {
-                response = httpAPI.get("http://2captcha.com/res.php?" + parameters);
+                response = httpAPI.get("http://2captcha.com/res.php?" + parameters, null);
                 setResponse(response);
-                Condition.sleep(3000);
-                timeCount = timeCount + 3;
+                Condition.sleep(10000);
+                timeCount = timeCount + 10;
                 System.out.println("Waiting on captcha to be solved.");
             } while (getResponse().contains("NOT_READY"));
             System.out.println("Captcha took " + timeCount + " seconds to solve.");

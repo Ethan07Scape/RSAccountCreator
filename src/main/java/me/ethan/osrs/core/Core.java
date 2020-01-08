@@ -1,28 +1,20 @@
 package me.ethan.osrs.core;
 
-import me.ethan.osrs.data.Constants;
-import me.ethan.osrs.threading.CreationThread;
+import me.ethan.osrs.api.proxy.ProxyRequest;
+import me.ethan.osrs.ui.MainUI;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Core {
-    private static final List<CreationThread> threadList = new ArrayList<>();
+    private static String REAL_IP = "0.0.0.0";
+
     public static void main(String[] args) {
-        createWorkerThreads();
-        startThreads();
+        REAL_IP = new ProxyRequest().getIP();
+        System.err.println("Original IP: " + REAL_IP);
+        final MainUI ui = new MainUI();
     }
 
-    private static void createWorkerThreads() {
-        for(int i = 0; i < Constants.THREAD_AMOUNT; i++) {
-            final CreationThread creationThread = new CreationThread();
-            threadList.add(creationThread);
-        }
+    public static String getRealIp() {
+        return REAL_IP;
     }
 
-    private static void startThreads() {
-        for(CreationThread thread : threadList) {
-            thread.start();
-        }
-    }
 }

@@ -5,19 +5,16 @@ import java.security.SecureRandom;
 public class Random {
     private static final double[] pd;
 
-    private static final ThreadLocal<java.util.Random> random = new ThreadLocal<java.util.Random>() {
-        @Override
-        protected java.util.Random initialValue() {
-            java.util.Random r;
-            try {
-                r = SecureRandom.getInstance("SHA1PRNG", "SUN");
-            } catch (Exception ignored) {
-                r = new java.util.Random();
-            }
-            r.setSeed(r.nextLong());
-            return r;
+    private static final ThreadLocal<java.util.Random> random = ThreadLocal.withInitial(() -> {
+        java.util.Random r;
+        try {
+            r = SecureRandom.getInstance("SHA1PRNG", "SUN");
+        } catch (Exception ignored) {
+            r = new java.util.Random();
         }
-    };
+        r.setSeed(r.nextLong());
+        return r;
+    });
 
     static {
         pd = new double[2];
