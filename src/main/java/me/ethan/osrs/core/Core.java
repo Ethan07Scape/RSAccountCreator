@@ -9,7 +9,7 @@ public class Core {
 
     public static void main(String[] args) {
         REAL_IP = new ProxyRequest().getIP();
-        System.err.println("Original IP: " + REAL_IP);
+        System.out.println("Original IP: " + REAL_IP);
         final MainUI ui = new MainUI();
     }
 
