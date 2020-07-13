@@ -1,8 +1,10 @@
 package me.ethan.osrs.api.proxy;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.stream.Stream;
 
@@ -23,11 +25,28 @@ public class ProxyHandler {
     }
 
     public void readPath(final String path) {
-        try (Stream<String> stream = Files.lines(Paths.get(path))) {
-            stream.forEach(a -> addToQueue(a));
-        } catch (IOException e) {
-            e.printStackTrace();
+        System.out.println("Reading path "+path);
+
+        try
+        {
+            FileInputStream fstream_school = new FileInputStream(path);
+            DataInputStream data_input = new DataInputStream(fstream_school);
+            BufferedReader buffer = new BufferedReader(new InputStreamReader(data_input));
+            String str_line;
+
+            while ((str_line = buffer.readLine()) != null)
+            {
+                str_line = str_line.trim();
+                if ((str_line.length()!=0))
+                {
+                    str_line = str_line.replaceAll("[^0-9.]", "");
+                    addToQueue(str_line);
+                }
+            }
+        }catch(Exception e){
+            System.err.println("File Read Error "+e.getMessage());
         }
+
         lastPath = path;
         startAmount = proxies.size();
     }
@@ -46,9 +65,13 @@ public class ProxyHandler {
         }
         try {
             final String proxyString = proxies.take();
-            final String host = proxyString.split(":")[0];
-            final String port = proxyString.split(":")[1];
-            return new Proxy(host, Integer.parseInt(port), java.net.Proxy.Type.HTTP);
+            String[] detail = proxyString.split(":");
+            if (detail[0].startsWith("S")) { // ScrapeBox has a capital S in front of all exported SOCKS proxies
+                detail[0] = detail[0].replaceFirst("S", "");
+                return new Proxy(detail[0], Integer.parseInt(detail[1]), java.net.Proxy.Type.SOCKS);
+            }else {
+                return new Proxy(detail[0], Integer.parseInt(detail[1]), java.net.Proxy.Type.HTTP);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,7 +83,7 @@ public class ProxyHandler {
         if (p == null)
             return null;
         if (ProxyChecker.getInstance().isProxyWorking(p)) {
-            System.err.println("Using Proxy: " + p.getIp() + ":" + p.getPort() + " - " + p.getResponseTime());
+            System.out.println("Using Proxy: " + p.getIp() + ":" + p.getPort() + " - " + p.getResponseTime());
             return p;
         } else {
             return getNextWorkingProxy();

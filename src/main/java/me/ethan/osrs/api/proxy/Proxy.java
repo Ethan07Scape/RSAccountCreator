@@ -18,6 +18,7 @@ public class Proxy {
         this.ip = ip;
         this.port = port;
         this.setProxyType(type);
+        System.out.println("Added "+ip+port+type);
     }
 
     public String getIp() {
