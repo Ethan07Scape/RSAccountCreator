@@ -66,7 +66,12 @@ public class ProxyChecker {
 
     private boolean connectsToRuneScape(Proxy p) {
         try {
-            final java.net.Proxy proxy = new java.net.Proxy(java.net.Proxy.Type.HTTP, new InetSocketAddress(p.getIp(), p.getPort()));
+            final java.net.Proxy proxy;
+            if (p.getProxyType().equals(java.net.Proxy.Type.HTTP)){
+                proxy = new java.net.Proxy(java.net.Proxy.Type.HTTP, new InetSocketAddress(p.getIp(), p.getPort()));
+            }else{
+                proxy = new java.net.Proxy(java.net.Proxy.Type.SOCKS, new InetSocketAddress(p.getIp(), p.getPort()));
+            }
             final HttpsURLConnection connection = (HttpsURLConnection) new URL(Constants.CREATE_LINK).openConnection(proxy);
             if (connection != null) {
                 connection.setRequestMethod("GET");
