@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="OSRSAccountCreator">
+    <output-path>$PROJECT_DIR$/out/artifacts/OSRSAccountCreator</output-path>
+    <root id="root">
+      <element id="archive" name="OSRSAccountCreator.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

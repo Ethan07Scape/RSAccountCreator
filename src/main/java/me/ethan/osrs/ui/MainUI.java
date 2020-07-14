@@ -20,7 +20,7 @@ public class MainUI {
     public void loadUI() {
         Platform.runLater(() -> {
             try {
-                frame = new JFrame("Ethan's Account Creator");
+                frame = new JFrame("OSRS Account Creator");
                 frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 jfxPanel = new JFXPanel();
                 final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MainUI.fxml"));
