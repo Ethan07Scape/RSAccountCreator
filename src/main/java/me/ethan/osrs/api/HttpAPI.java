@@ -3,6 +3,7 @@ package me.ethan.osrs.api;
 
 import me.ethan.osrs.api.proxy.Proxy;
 import me.ethan.osrs.data.Constants;
+import me.ethan.osrs.utils.Random;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -56,8 +57,8 @@ public class HttpAPI {
         final BufferedReader rd = new BufferedReader(
                 new InputStreamReader(response.getEntity().getContent()));
 
-        final StringBuffer result = new StringBuffer();
-        String line = "";
+        final StringBuilder result = new StringBuilder();
+        String line;
         while ((line = rd.readLine()) != null) {
             result.append(line);
         }
@@ -104,8 +105,8 @@ public class HttpAPI {
         BufferedReader rd = new BufferedReader(
                 new InputStreamReader(response.getEntity().getContent()));
 
-        StringBuffer result = new StringBuffer();
-        String line = "";
+        StringBuilder result = new StringBuilder();
+        String line;
         while ((line = rd.readLine()) != null) {
             result.append(line);
         }
@@ -126,16 +127,22 @@ public class HttpAPI {
         for (Element inputElement : inputElements) {
             String key = inputElement.attr("name");
             String value = inputElement.attr("value");
-            if (key.equals("day")) {
-                value = "2";
-            } else if (key.equals("month")) {
-                value = "2";
-            } else if (key.equals("year")) {
-                value = "1990";
-            } else if (key.equals("email1")) {
-                value = email;
-            } else if (key.equals("password1")) {
-                value = Constants.BOT_PASSWORD;
+            switch (key) {
+                case "day":
+                    value = "" + Random.nextInt(1,30);
+                    break;
+                case "month":
+                    value = "" + Random.nextInt(1,12);
+                    break;
+                case "year":
+                    value = "19" + Random.nextInt(70, 99);
+                    break;
+                case "email1":
+                    value = email;
+                    break;
+                case "password1":
+                    value = Constants.BOT_PASSWORD;
+                    break;
             }
             if (key.length() > 0 && value.length() > 0) {
                 //System.err.println("Key: "+key + " - "+value);
@@ -146,7 +153,7 @@ public class HttpAPI {
         return paramList;
     }
 
-    private final CloseableHttpClient getHttpClient() {
+    private CloseableHttpClient getHttpClient() {
         return HttpClientBuilder.create().disableAutomaticRetries().setRedirectStrategy(new LaxRedirectStrategy()).setDefaultCookieStore(cookieStore).build();
     }
 }

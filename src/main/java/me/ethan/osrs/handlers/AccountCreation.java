@@ -42,7 +42,7 @@ public class AccountCreation {
 
 
     private String generateName() {
-        return Random.nextInt(0, 99) + Random.getRandomName(Random.nextInt(6, 15)) + Random.nextInt(0, 99) + "@gmail.com";
+        return Random.nextInt(0, 999) + Random.getRandomName(Random.nextInt(4, 10)) + Random.nextInt(0, 99) + "@gmail.com";
     }
 
     private boolean createSuccess() {
