@@ -16,9 +16,13 @@ public class AccountCreation {
     private final Proxy proxy;
     private String currentSource;
 
+    private final String[] emailProviders = new String[]{
+      "@aol.com", "@netscape.net", "@yahoo.com", "@gmail.com", "@email.com"
+    };
+
     public AccountCreation(final Proxy proxy) {
         this.httpAPI = new HttpAPI();
-        this.email = generateName();
+        this.email = generateEmail();
         this.proxy = proxy;
     }
 
@@ -41,8 +45,8 @@ public class AccountCreation {
     }
 
 
-    private String generateName() {
-        return Random.nextInt(0, 999) + Random.getRandomName(Random.nextInt(4, 10)) + Random.nextInt(0, 99) + "@gmail.com";
+    private String generateEmail() {
+        return Random.nextInt(0, 999) + Random.getRandomName(Random.nextInt(4, 10)) + Random.nextInt(0, 99) + emailProviders[Random.nextInt(0, emailProviders.length)];
     }
 
     private boolean createSuccess() {

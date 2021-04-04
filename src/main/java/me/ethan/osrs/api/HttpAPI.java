@@ -115,7 +115,7 @@ public class HttpAPI {
 
     }
 
-    public List<NameValuePair> getFilledForm(String html, String response, String email) throws UnsupportedEncodingException {
+    public List<NameValuePair> getFilledForm(String html, String response, String email) {
 
         final Document doc = Jsoup.parse(html);
 
@@ -135,7 +135,7 @@ public class HttpAPI {
                     value = "" + Random.nextInt(1,12);
                     break;
                 case "year":
-                    value = "19" + Random.nextInt(70, 99);
+                    value = "19" + Random.nextInt(65, 99);
                     break;
                 case "email1":
                     value = email;
