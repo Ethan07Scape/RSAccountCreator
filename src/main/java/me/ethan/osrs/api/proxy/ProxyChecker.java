@@ -12,7 +12,7 @@ import java.net.URL;
 
 public class ProxyChecker {
     private static ProxyChecker instance;
-    private ProxyRequest proxyRequest;
+    private final ProxyRequest proxyRequest;
 
     public ProxyChecker() {
         proxyRequest = new ProxyRequest();
@@ -66,7 +66,12 @@ public class ProxyChecker {
 
     private boolean connectsToRuneScape(Proxy p) {
         try {
-            final java.net.Proxy proxy = new java.net.Proxy(java.net.Proxy.Type.HTTP, new InetSocketAddress(p.getIp(), p.getPort()));
+            final java.net.Proxy proxy;
+            if (p.getProxyType().equals(java.net.Proxy.Type.HTTP)){
+                proxy = new java.net.Proxy(java.net.Proxy.Type.HTTP, new InetSocketAddress(p.getIp(), p.getPort()));
+            }else{
+                proxy = new java.net.Proxy(java.net.Proxy.Type.SOCKS, new InetSocketAddress(p.getIp(), p.getPort()));
+            }
             final HttpsURLConnection connection = (HttpsURLConnection) new URL(Constants.CREATE_LINK).openConnection(proxy);
             if (connection != null) {
                 connection.setRequestMethod("GET");
@@ -76,7 +81,7 @@ public class ProxyChecker {
                 if (responseCode == 200) {
                     final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     String inputLine;
-                    final StringBuffer response = new StringBuffer();
+                    final StringBuilder response = new StringBuilder();
                     while ((inputLine = in.readLine()) != null) {
                         response.append(inputLine);
                     }

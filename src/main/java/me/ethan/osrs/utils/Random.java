@@ -39,12 +39,12 @@ public class Random {
     }
 
     public static int nextInt(final int min, final int max) {
-        final int a = min < max ? min : max, b = max > min ? max : min;
+        final int a = Math.min(min, max), b = Math.max(max, min);
         return a + (b == a ? 0 : random.get().nextInt(b - a));
     }
 
     public static double nextDouble(final double min, final double max) {
-        final double a = min < max ? min : max, b = max > min ? max : min;
+        final double a = Math.min(min, max), b = Math.max(max, min);
         return a + random.get().nextDouble() * (b - a);
     }
 
@@ -76,23 +76,20 @@ public class Random {
                     (random.nextFloat() * (rightLimit - leftLimit + 1));
             buffer.append((char) randomLimitedInt);
         }
-        String generatedString = buffer.toString();
-        return generatedString;
+        return buffer.toString();
     }
 
     public static String getRandomName(int length) {
 
         int leftLimit = 97;
         int rightLimit = 122;
-        int targetStringLength = length;
         java.util.Random random = new java.util.Random();
-        StringBuilder buffer = new StringBuilder(targetStringLength);
-        for (int i = 0; i < targetStringLength; i++) {
+        StringBuilder buffer = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
             int randomLimitedInt = leftLimit + (int)
                     (random.nextFloat() * (rightLimit - leftLimit + 1));
             buffer.append((char) randomLimitedInt);
         }
-        String generatedString = buffer.toString();
-        return generatedString;
+        return buffer.toString();
     }
 }

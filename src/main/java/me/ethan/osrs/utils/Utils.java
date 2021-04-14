@@ -14,7 +14,7 @@ public class Utils {
 
     public synchronized void writeAccount(String account) {
         try {
-            final String txtPath = System.getProperty("user.home") + "\\Desktop\\New Accounts.txt";
+            final String txtPath = System.getProperty("user.home") + "\\Desktop\\new-accounts.txt";
             final File file = new File(txtPath);
             final FileWriter fw = new FileWriter(file, true);
             final BufferedWriter bw = new BufferedWriter(fw);

@@ -29,7 +29,7 @@ public class CreationThread extends Thread {
                         break;
                 }
                 Condition.sleep(200);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
 
             }
         }

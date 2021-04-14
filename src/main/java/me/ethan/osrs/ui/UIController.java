@@ -39,8 +39,7 @@ public class UIController {
             System.err.println("I suggest you load proxies...");
             Constants.USE_PROXIES = false;
         }
-        final String apiKey = this.apiKey.getText();
-        Constants.CAPTCHA_KEY = apiKey;
+        Constants.CAPTCHA_KEY = this.apiKey.getText();
         Constants.THREAD_AMOUNT = threads;
         createWorkerThreads();
         startThreads();
@@ -52,7 +51,7 @@ public class UIController {
         try {
             final FileChooser fileChooser = new FileChooser();
             final File selectedFile = fileChooser.showOpenDialog(apiKey.getScene().getWindow());
-            if (selectedFile.getAbsolutePath() != null && selectedFile.getAbsolutePath().endsWith(".txt")) {
+            if (selectedFile.getAbsolutePath().endsWith(".txt")) {
                 ProxyHandler.getInstance().readPath(selectedFile.getAbsolutePath());
             }
             proxiesLoaded.setText(ProxyHandler.getInstance().getStartAmount() + "");
@@ -65,7 +64,7 @@ public class UIController {
         try {
             return Integer.parseInt(threadCount.getText());
         } catch (Exception e) {
-
+            System.err.println("That probably wasn't a valid integer.");
         }
         return -1;
     }

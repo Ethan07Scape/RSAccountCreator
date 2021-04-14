@@ -5,7 +5,7 @@ import java.net.Proxy.Type;
 public class Proxy {
 
     private final String ip;
-    private int port;
+    private final int port;
     private String country;
     private String responseTime = null;
 
@@ -18,6 +18,7 @@ public class Proxy {
         this.ip = ip;
         this.port = port;
         this.setProxyType(type);
+        System.out.println("Added "+ip+port+type);
     }
 
     public String getIp() {

@@ -5,9 +5,9 @@ import me.ethan.osrs.utils.Condition;
 
 
 public class ReCaptchaV2 {
-    private String siteKey;
-    private String googleKey;
-    private String url;
+    private final String siteKey;
+    private final String googleKey;
+    private final String url;
     private int timeCount;
     private String response;
 
